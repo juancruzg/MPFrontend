@@ -2,4 +2,36 @@
 
 .product-card {
     background-color: $white;
+    display: flex;
+    flex-direction: row;
+
+    .product-picture {
+        flex-direction: column;
+        flex: 0 1 10%;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        flex: 0 1 88%;
+
+        .price-tag {
+            flex: 0 1 100%;
+            .price-currency {
+
+            }
+
+            .price-amount {
+
+            }
+        }
+
+        .product-title {
+            flex: 0 1 100%;
+        }    
+
+        .product-location {
+        }
+    }
 }

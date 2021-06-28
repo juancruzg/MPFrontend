@@ -5,7 +5,9 @@ class Card extends React.Component {
         const { id, title, price, picture, freeShipping } = this.props;
 
         return <div className="product-card">
-            <img src={picture} alt={title || "product"}></img>
+            <div className="product-picture">
+                <img width="180" height="180" src={"https://http2.mlstatic.com/D_NQ_NP_909149-MLA44665947846_012021-V.webp"} alt={title || "product"}></img>
+            </div>
             <div className="content">
                 <span className="price-tag">
                     <span className="price-currency">$</span>
