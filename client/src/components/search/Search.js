@@ -8,13 +8,15 @@ import ProductDetails from './ProductDetails/ProductDetails';
 
 import './Search.scss';
 
+const ITEMS_URI = "/items"
+
 class Search extends React.Component {
     handleSearch = (text) => {
         const { history } = this.props;
 
         // Push the route to load the serach results.
         history.push({
-            pathname: "/items",
+            pathname: ITEMS_URI,
             search: `search=${text}`
         });
     }
@@ -29,10 +31,10 @@ class Search extends React.Component {
             </header>
 
             <div className="search-container">
-                <Route path="/items" exact>
+                <Route path={ITEMS_URI} exact>
                     <SearchResults />
                 </Route>
-                <Route path="/items/:id" exact>
+                <Route path={`${ITEMS_URI}/:id`} exact>
                     <ProductDetails />
                 </Route>
             </div>

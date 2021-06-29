@@ -2,7 +2,7 @@ class Item {
     constructor({
         id, title, description, price, thumbnail, condition,
         // eslint-disable-next-line camelcase
-        shipping: { free_shipping }, address, currency_id, sold_quantity
+        shipping: { free_shipping }, address, currency_id, sold_quantity,
     }) {
         this.id = id;
         this.title = title;
@@ -15,6 +15,8 @@ class Item {
         this.condition = condition;
         // eslint-disable-next-line camelcase
         this.freeShipping = free_shipping;
+
+        // In case we are using this as a search item, we set the location.
         if (address) {
             // eslint-disable-next-line camelcase
             this.location = address.city_name;

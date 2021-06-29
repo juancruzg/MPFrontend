@@ -14,7 +14,7 @@ app.use(express.urlencoded({
     extended: true,
 }));
 
-// Route to search items
+// Endpoint to search items
 app.get('/api/items', async (req, res) => {
     const { query: { q } } = req;
 
@@ -27,7 +27,7 @@ app.get('/api/items', async (req, res) => {
     }
 });
 
-// Route to find specific item
+// Endpoint to find specific item
 app.get('/api/items/:id', async (req, res) => {
     const { params: { id } } = req;
 

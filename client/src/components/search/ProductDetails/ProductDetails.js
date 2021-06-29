@@ -2,9 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 
-import { GET_ITEM } from '../../../consts/URLs';
 import ConditionLabel from './ConditionLabel';
 import Breadcrumb from '../../Breadcrumb/Breadcrumb';
+import { GET_ITEM } from '../../../consts/URLs';
 import { formatMoney } from '../../../util/Format';
 
 import './ProductDetails.scss';

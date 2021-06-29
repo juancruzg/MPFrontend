@@ -22,6 +22,7 @@ class SearchResults extends React.Component {
 
     // React events
     componentDidUpdate(prevProps) {
+        // If the search box is updated, trigger a new search
         if (this.props.location.search !== prevProps.location.search)
             this._findItem();
     }
