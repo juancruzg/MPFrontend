@@ -3,50 +3,11 @@ import axios from 'axios';
 import qs from 'qs';
 import { withRouter } from 'react-router-dom';
 
+import { GET_ITEMS } from '../../../consts/URLs';
 import Breadcrumb from '../../Breadcrumb/Breadcrumb';
 import Card from './Card';
 
 import './SearchResults.scss';
-
-const mockCategories = ["Category 1", "Category 2", "Category 3"];
-
-const mock = [
-    { 
-        id: 1, 
-        title: "Zapatillas alta yanta, neverponi ofertón", 
-        price: {
-            currency: "$",
-            amount: 1980.25,
-            decimals: 2
-        }, 
-        picture: "https://http2.mlstatic.com/D_NQ_NP_909149-MLA44665947846_012021-V.webp", 
-        freeShipping: true
-    },
-    { 
-        id: 1, 
-        title: "Licuadora alta yanta, neverponi ofertón", 
-        price: {
-            currency: "$",
-            amount: 22222.25,
-            decimals: 1
-        }, 
-        picture: "https://http2.mlstatic.com/D_NQ_NP_909149-MLA44665947846_012021-V.webp", 
-        freeShipping: false
-    },
-    { 
-        id: 1, 
-        title: "Mochila alta yanta, neverponi ofertón", 
-        price: {
-            currency: "$",
-            amount: 342222.25,
-            decimals: 2
-        }, 
-        picture: "https://http2.mlstatic.com/D_NQ_NP_909149-MLA44665947846_012021-V.webp", 
-        freeShipping: false
-    }
-]
-
-const url = "http://localhost:3001/api/items?q=:query";
 
 class SearchResults extends React.Component {
     constructor(props) {
@@ -54,21 +15,36 @@ class SearchResults extends React.Component {
 
         this.state = { 
             items: [],
+            categories: [],
             loading: true
         };
     }
 
+    // React events
+    componentDidUpdate(prevProps) {
+        if (this.props.location.search !== prevProps.location.search)
+            this._findItem();
+    }
+
     componentDidMount() {
+        this._findItem();
+    }
+
+    _findItem() {
+        this.setState({ loading: true });
+
         // From query string, build the uri to touch.
         const search = qs.parse(this.props.location.search.slice(1)).search;
 
-        axios.get(url.replace(":query", search)).then((res) => {
+        axios.get(GET_ITEMS.replace(":query", search)).then((res) => {
             this.setState({ 
-                items: mock, 
+                items: res.data.items,
+                categories: res.data.categories, 
                 loading: false
             });
         }, (error) => {
             this.setState({
+                error,
                 loading: false,
             });
         });
@@ -84,19 +60,22 @@ class SearchResults extends React.Component {
     }
 
     render() {
-        const { items, loading } = this.state;
+        const { items, categories, loading, error } = this.state;
 
         if (loading)
             return "Loading...";
 
+        if (error)
+            return error.toString();
+
         return <React.Fragment>
-            <Breadcrumb items={mockCategories} />
+            <Breadcrumb items={categories} />
             <div className="product-list">
                 { items.map((props, i) => {
                     return <Card 
                         key={i} 
                         {...props} 
-                        isLast={i === mock.length - 1}
+                        isLast={i === items.length - 1}
                         onClick={this.handleClick} />;
                 })}
             </div>

@@ -6,7 +6,7 @@
     flex-direction: row;
     padding: 32px;
 
-    @include for-size(medium-desktop-up) {
+    @include for-size(desktop-up) {
         flex-direction: column;
     }
 
