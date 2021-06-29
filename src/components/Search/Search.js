@@ -15,7 +15,7 @@ class Search extends React.Component {
         // Push the route to load the serach results.
         history.push({
             pathname: "/items",
-            search: `?search=${text}`
+            search: `search=${text}`
         });
     }
 

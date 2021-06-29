@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import qs from 'qs';
 import { withRouter } from 'react-router-dom';
 
 import Breadcrumb from '../../Breadcrumb/Breadcrumb';
@@ -44,7 +46,34 @@ const mock = [
     }
 ]
 
+const url = "localhost:3001/api/items?q=:query";
+
 class SearchResults extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            items: [],
+            loading: true
+        };
+    }
+
+    componentDidMount() {
+        // From query string, build the uri to touch.
+        const search = qs.parse(this.props.location.search.slice(1)).search;
+
+        axios.get(url.replace(":query", search)).then((res) => {
+            this.setState({ 
+                items: mock, 
+                loading: false
+            });
+        }, (error) => {
+            this.setState({
+                loading: false,
+            });
+        });
+    }
+
     handleClick = (id) => {
         const { history } = this.props;
 
@@ -55,10 +84,15 @@ class SearchResults extends React.Component {
     }
 
     render() {
+        const { items, loading } = this.state;
+
+        if (loading)
+            return "Loading...";
+
         return <React.Fragment>
             <Breadcrumb items={mockCategories} />
             <div className="product-list">
-                { mock.map((props, i) => {
+                { items.map((props, i) => {
                     return <Card 
                         key={i} 
                         {...props} 
