@@ -1,26 +1,49 @@
 import React from 'react';
+//import { withRouter } from 'react-router-dom';
+
+import shippingLogo from '../../../assets/ic_shipping.png'
 
 class Card extends React.Component {
-    render() {
-        const { id, title, price, picture, freeShipping } = this.props;
+    handleProductClick = () => {
+        const { id, onClick } = this.props;
 
-        return <div className="product-card">
-            <div className="product-picture">
-                <img width="180" height="180" src={"https://http2.mlstatic.com/D_NQ_NP_909149-MLA44665947846_012021-V.webp"} alt={title || "product"}></img>
+        onClick && onClick(id);
+    }
+
+    render() {
+        const { title, price: { currency, amount }, picture, freeShipping, location, isLast } = this.props;
+
+        return <React.Fragment>
+            <div className="product-card">
+                <div className="product-picture" onClick={this.handleProductClick}>
+                    <img width="180" height="180" src={picture} alt={title || "product"}></img>
+                </div>
+                <div className="content">
+                    <div className="product-details">
+                        <div className="product-title">
+                            <span className="price-tag" onClick={this.handleProductClick}>
+                                <span className="price-currency">{currency}</span>
+                                {" "}
+                                <span className="price-amount">{amount}</span>
+                                { freeShipping && 
+                                    <React.Fragment>
+                                        {" "}
+                                        <img src={shippingLogo} alt="free shipping"></img>
+                                    </React.Fragment>
+                                }  
+                            </span>
+                            <h2 onClick={this.handleProductClick}>{ title }</h2>
+                        </div>
+                        <span className="product-location">
+                            { location }
+                        </span>
+                    </div>                    
+                </div>
             </div>
-            <div className="content">
-                <span className="price-tag">
-                    <span className="price-currency">$</span>
-                    <span className="price-amount">200</span>    
-                </span>
-                <h2 className="product-title">
-                     Zapatillas
-                </h2>
-                <span className="product-location">
-                    Rosario
-                </span>
-            </div>
-        </div>;
+            { !isLast && 
+                <hr className="product-card-separator" />
+            }
+        </React.Fragment>;
     }
 };
 
