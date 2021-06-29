@@ -2,7 +2,7 @@
   "name": "mpfrontend-server",
   "version": "1.0.0",
   "description": "Server side app to host an api to serve ML sandbox endpoints",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "set HTTP_PORT=3001 && babel-node ./src/service/index.js",
     "nodemon": "nodemon --exec yarn start",
