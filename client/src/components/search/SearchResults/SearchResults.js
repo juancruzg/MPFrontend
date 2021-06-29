@@ -46,7 +46,7 @@ const mock = [
     }
 ]
 
-const url = "localhost:3001/api/items?q=:query";
+const url = "http://localhost:3001/api/items?q=:query";
 
 class SearchResults extends React.Component {
     constructor(props) {

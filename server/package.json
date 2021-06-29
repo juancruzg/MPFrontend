@@ -4,8 +4,26 @@
   "description": "Server side app to host an api to serve ML sandbox endpoints",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "set HTTP_PORT=3001 && babel-node ./src/service/index.js",
+    "nodemon": "nodemon --exec yarn start",
+    "lint": "eslint index.js src",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "Juan Cruz Grasso",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/node": "^7.14.7",
+    "@babel/preset-env": "^7.14.7",
+    "eslint": "^7.29.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4",
+    "jest": "^27.0.6",
+    "nodemon": "^2.0.8"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1"
+  }
 }
