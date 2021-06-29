@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-import { GET_ITEM_URL, GET_ITEMS_URL, GET_ITEM_DESCRIPTION_URL } from './consts';
+import {
+    GET_ITEM_URL,
+    GET_ITEMS_URL,
+    GET_ITEM_DESCRIPTION_URL,
+    GET_CATEGORIES,
+} from './consts';
 import Item from './item';
 
 const getItem = async (id) => {
@@ -22,8 +27,13 @@ const getItem = async (id) => {
         // Set the description.
         item.description = descResponse.data.plain_text;
 
+        // Retrieve item category.
+        const categoryResponse = await axios.get(GET_CATEGORIES.replace(':id', response.data.category_id));
+
+        const categories = categoryResponse.data.path_from_root.map((cr) => cr.name);
+
         return {
-            categories: ['Celulares y Teléfonos', 'Celulares y Smartphones'],
+            categories,
             item,
             author: {
                 name: 'Juan Cruz',
@@ -32,7 +42,7 @@ const getItem = async (id) => {
         };
     }
 
-    throw Error('Something went wrong');
+    throw { response: { statusText: 'Something went wrong', status: 500 } };
 };
 
 const getItems = async (search) => {
@@ -40,14 +50,23 @@ const getItems = async (search) => {
     const response = await axios.get(GET_ITEMS_URL, { params: { q: search } });
 
     if (response.data && response.data.results && response.data.results.length) {
-        // We only need to return 4 results
+        // We only need to return 4 results.
         const results = response.data.results.slice(0, 4);
 
         // Then we construct new Items for each of the 4 retrieved ones, to filter undesired properties.
         const items = results.map((result) => new Item(result));
 
+        // Retrieve the categories.
+        const categoryFilters = response.data.filters.find((f) => f.id === 'category');
+
+        let categories = [];
+
+        if (categoryFilters && categoryFilters.values) {
+            categories = categoryFilters.values[0].path_from_root.map((pfr) => pfr.name);
+        }
+
         return {
-            categories: ['Celulares y Teléfonos', 'Celulares y Smartphones'],
+            categories,
             items,
             author: {
                 name: 'Juan Cruz',
@@ -56,7 +75,11 @@ const getItems = async (search) => {
         };
     }
 
-    throw Error('Something went wrong');
+    if (response.data.results && !response.data.results.length) {
+        throw { response: { statusText: 'Not Found', status: 404 } };
+    }
+
+    throw { response: { statusText: 'Something went wrong', status: 500 } };
 };
 
 export { getItem, getItems };

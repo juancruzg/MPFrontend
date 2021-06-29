@@ -18,7 +18,6 @@ class Item {
 
         // In case we are using this as a search item, we set the location.
         if (address) {
-            // eslint-disable-next-line camelcase
             this.location = address.city_name;
         }
 

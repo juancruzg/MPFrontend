@@ -4,7 +4,6 @@ import cors from 'cors';
 import { getItem, getItems } from './itemController';
 
 const { HTTP_PORT = 3001 } = process.env;
-
 const app = express();
 
 // Middleware
