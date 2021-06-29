@@ -1,8 +1,8 @@
 import React from 'react';
-//import { withRouter } from 'react-router-dom';
 
-import shippingLogo from '../../../assets/ic_shipping.png'
+import { formatMoney } from '../../../util/Format';
 
+import shippingLogo from '../../../assets/ic_shipping.png';
 class Card extends React.Component {
     handleProductClick = () => {
         const { id, onClick } = this.props;
@@ -11,7 +11,7 @@ class Card extends React.Component {
     }
 
     render() {
-        const { title, price: { currency, amount }, picture, freeShipping, location, isLast } = this.props;
+        const { title, price: { currency, amount, decimals }, picture, freeShipping, location, isLast } = this.props;
 
         return <React.Fragment>
             <div className="product-card">
@@ -24,7 +24,7 @@ class Card extends React.Component {
                             <span className="price-tag" onClick={this.handleProductClick}>
                                 <span className="price-currency">{currency}</span>
                                 {" "}
-                                <span className="price-amount">{amount}</span>
+                                <span className="price-amount">{formatMoney(amount, decimals)}</span>
                                 { freeShipping && 
                                     <React.Fragment>
                                         {" "}

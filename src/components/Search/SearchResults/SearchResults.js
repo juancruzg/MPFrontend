@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import Breadcrumb from '../../Breadcrumb/Breadcrumb';
 import Card from './Card';
 
 import './SearchResults.scss';
@@ -13,7 +14,8 @@ const mock = [
         title: "Zapatillas alta yanta, neverponi ofertón", 
         price: {
             currency: "$",
-            amount: "1980.25"
+            amount: 1980.25,
+            decimals: 2
         }, 
         picture: "https://http2.mlstatic.com/D_NQ_NP_909149-MLA44665947846_012021-V.webp", 
         freeShipping: true
@@ -23,7 +25,8 @@ const mock = [
         title: "Licuadora alta yanta, neverponi ofertón", 
         price: {
             currency: "$",
-            amount: "222.25"
+            amount: 22222.25,
+            decimals: 1
         }, 
         picture: "https://http2.mlstatic.com/D_NQ_NP_909149-MLA44665947846_012021-V.webp", 
         freeShipping: false
@@ -33,7 +36,8 @@ const mock = [
         title: "Mochila alta yanta, neverponi ofertón", 
         price: {
             currency: "$",
-            amount: "342.25"
+            amount: 342222.25,
+            decimals: 2
         }, 
         picture: "https://http2.mlstatic.com/D_NQ_NP_909149-MLA44665947846_012021-V.webp", 
         freeShipping: false
@@ -50,20 +54,9 @@ class SearchResults extends React.Component {
         });
     }
 
-    renderCategories(categories) {
-        return categories.map((category, i) => {
-            if (i !== categories.length - 1)
-                return <span key={i}>{category}{" > "}</span>;
-            else
-                return <span className="last-category" key={i}>{ category }</span>
-        });
-    }
-
     render() {
         return <React.Fragment>
-            <div className="categories">
-                { this.renderCategories(mockCategories) }
-            </div>
+            <Breadcrumb items={mockCategories} />
             <div className="product-list">
                 { mock.map((props, i) => {
                     return <Card 

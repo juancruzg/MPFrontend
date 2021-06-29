@@ -4,6 +4,7 @@ import { Route, Link, withRouter } from 'react-router-dom';
 import logo from '../../assets/Logo_ML.png';
 import SearchInput from './SearchInput';
 import SearchResults from './SearchResults/SearchResults';
+import ProductDetails from './ProductDetails/ProductDetails';
 
 import './Search.scss';
 
@@ -32,7 +33,7 @@ class Search extends React.Component {
                     <SearchResults />
                 </Route>
                 <Route path="/items/:id" exact>
-                    asdf
+                    <ProductDetails />
                 </Route>
             </div>
         </React.Fragment>;

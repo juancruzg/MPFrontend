@@ -5,6 +5,23 @@ $light-grey: #999999;
 $white-smoke: #EEEEEE;
 $white: #FFFFFF;
 $primary-color: #3483FA;
+$primary-color-hover: #327AE6;
 $font-family-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
 sans-serif;
+
+@mixin for-size($size) {
+    @if $size == phone-only {
+        @media (max-width: 599px) { @content; }
+    } @else if $size == tablet-portrait-up {
+        @media (max-width: 600px) { @content; }
+    } @else if $size == tablet-landscape-up {
+        @media (max-width: 900px) { @content; }
+    } @else if $size == desktop-up {
+        @media (max-width: 1200px) { @content; }
+    } @else if $size == medium-desktop-up {
+        @media (max-width: 1600px) { @content; }
+    } @else if $size == big-desktop-up {
+        @media (max-width: 1800px) { @content; }
+    }
+}
