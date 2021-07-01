@@ -21,16 +21,26 @@ const getItem = async (id) => {
         // The ML method sends multiple imgs, we'll take the 1st one and set it to our item.
         item.picture = picture.secure_url;
 
-        // Now that our item is ready, we need to retrieve the description.
-        const descResponse = await axios.get(GET_ITEM_DESCRIPTION_URL.replace(':id', id));
+        try {
+            // Now that our item is ready, we need to retrieve the description.
+            const descResponse = await axios.get(GET_ITEM_DESCRIPTION_URL.replace(':id', id));
 
-        // Set the description.
-        item.description = descResponse.data.plain_text;
+            // Set the description.
+            item.description = descResponse.data.plain_text;
+        } catch (error) {
+            item.description = null;
+        }
 
-        // Retrieve item category.
-        const categoryResponse = await axios.get(GET_CATEGORIES.replace(':id', response.data.category_id));
+        let categories;
 
-        const categories = categoryResponse.data.path_from_root.map((cr) => cr.name);
+        try {
+            // Retrieve item category.
+            const categoryResponse = await axios.get(GET_CATEGORIES.replace(':id', response.data.category_id));
+
+            categories = categoryResponse.data.path_from_root.map((cr) => cr.name);
+        } catch (error) {
+            categories = [];
+        }
 
         return {
             categories,
