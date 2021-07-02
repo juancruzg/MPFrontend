@@ -32,10 +32,15 @@ const SearchResults = () => {
         }, (error) => {
             const { response: { data } } = error;
 
-            if (data && data.message) {
+            if (error.response.status === 404) {
+                // No items?
+                setItems([]);
+            } else if (data && data.message) {
+                // Internal error?
                 setError(data.message);
             } else {
-                setError("Woops, something went wrong");
+                // Unkwown error?
+                setError("Woops, sucedió un error.");
             } 
 
             setLoading(false);
@@ -53,7 +58,11 @@ const SearchResults = () => {
         return <span data-testid="loading">Loading...</span>;
 
     if (error)
-        return <span data-testid="error">{ error }</span>;
+        return <div className="error-message" data-testid="error">{ error }</div>;
+
+    if (items.length === 0) {
+        return <div className="error-message" data-testid="no-items">No se encontraron productos.</div>;
+    }
 
     return <React.Fragment>
         <Breadcrumb items={categories} />

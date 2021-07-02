@@ -18,8 +18,20 @@ test('should display MercadoLibre`s logo and searchbar', () => {
     expect(screen.getByTestId('search-box-button')).toBeInTheDocument();
 });
 
+test('should not search if text is empty', () => {    
+    SearchResults.mockImplementation(() => <div>SearchResultsMock</div>);
+
+    // Trigger the search event
+    fireEvent.click(screen.getByTestId('search-box-button'));
+
+    expect(screen.queryByText('SearchResultsMock')).toBeNull();
+});
+
 test('should push to search results route', () => {    
     SearchResults.mockImplementation(() => <div>SearchResultsMock</div>);
+
+    // Enter some text on the input
+    fireEvent.change(screen.getByTestId('search-box'), { target: { value: 'iphone' } });
 
     // Trigger the search event
     fireEvent.click(screen.getByTestId('search-box-button'));

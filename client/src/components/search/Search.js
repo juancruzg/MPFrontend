@@ -14,11 +14,13 @@ const Search = () => {
     const history = useHistory();
 
     const handleSearch = (text) => {
-        // Push the route to load the serach results.
-        history.push({
-            pathname: ITEMS_URI,
-            search: `search=${text}`
-        });
+        if (text) {
+            // Push the route to load the serach results.
+            history.push({
+                pathname: ITEMS_URI,
+                search: `search=${text}`
+            });
+        }
     }
 
     return <React.Fragment>

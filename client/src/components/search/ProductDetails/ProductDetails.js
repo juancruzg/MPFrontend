@@ -41,10 +41,10 @@ const ProductDetail = () => {
     const { picture, title, description, condition, soldQuantity, price: {currency, amount, decimals} } = product;
 
     if (loading)
-        return <span data-testid="loading">Loading ...</span>;
+        return <span data-testid="loading">Loading...</span>;
 
     if (error)
-        return <span data-testid="error">{ error }</span>;
+        return <div className="error-message" data-testid="error">{ error }</div>;
 
     return <React.Fragment>
         <Breadcrumb items={categories} />

@@ -30,6 +30,7 @@ const SearchInput = ({ onSubmit }) => {
             data-testid="search-box-button"
             role="button" 
             tabIndex={0} 
+            disabled={!text}
             className="nav-search-button">
             <img src={searchLogo} alt="buscar" />
         </div>

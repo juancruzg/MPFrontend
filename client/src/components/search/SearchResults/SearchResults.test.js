@@ -31,7 +31,7 @@ const mockedItem = {
     picture: 'mock',
     freeShipping: true,
     location: 'Rosario',
- };
+};
 
 const server = setupServer(
     rest.get(GET_ITEMS.replace('?q=:query', ''), (req, res, ctx) => {
@@ -61,34 +61,51 @@ test('should load and make an api call to retrieve items', async () => {
     expect(screen.queryByTestId('loading')).toBeNull();
 });
 
-test('should push to product details route after clicking in title', async () => {  
+test('should not find items', async () => {
+    server.use(
+        rest.get(GET_ITEMS.replace('?q=:query', ''), (req, res, ctx) => {
+            return res.once(
+                ctx.json({ items: [], categories: [] }),
+            );
+        })
+    );
+
     render(<Router><SearchResults /></Router>);
 
-    await waitFor(() => screen.getByTestId('product-list'));
+    await waitFor(() => screen.getByTestId('no-items'));
 
-    // Trigger the search event
-    fireEvent.click(screen.getByTestId('product-card-title'));
-    expect(mockHistoryPush).toHaveBeenCalledWith({ pathname: `/items/${mockedItem.id}` });
+    expect(screen.getByTestId('no-items')).toBeInTheDocument();
+    expect(screen.getByTestId('no-items')).toHaveTextContent('No se encontraron productos.');
 });
 
-test('should push to product details route after clicking in image', async () => {  
-    render(<Router><SearchResults /></Router>);
+describe('Click Event', () => {
+    beforeEach(() => {
+        render(<Router><SearchResults /></Router>);
+    });
 
-    await waitFor(() => screen.getByTestId('product-list'));
-
-    // Trigger the search event
-    fireEvent.click(screen.getByTestId('product-card-image'));
-    expect(mockHistoryPush).toHaveBeenCalledWith({ pathname: `/items/${mockedItem.id}` });
-});
-
-test('should push to product details route after clicking in price', async () => {  
-    render(<Router><SearchResults /></Router>);
-
-    await waitFor(() => screen.getByTestId('product-list'));
-
-    // Trigger the search event
-    fireEvent.click(screen.getByTestId('product-card-price'));
-    expect(mockHistoryPush).toHaveBeenCalledWith({ pathname: `/items/${mockedItem.id}` });
+    it('should push to product details route after clicking in title', async () => {  
+        await waitFor(() => screen.getByTestId('product-list'));
+    
+        // Trigger the search event
+        fireEvent.click(screen.getByTestId('product-card-title'));
+        expect(mockHistoryPush).toHaveBeenCalledWith({ pathname: `/items/${mockedItem.id}` });
+    });
+    
+    it('should push to product details route after clicking in image', async () => {      
+        await waitFor(() => screen.getByTestId('product-list'));
+    
+        // Trigger the search event
+        fireEvent.click(screen.getByTestId('product-card-image'));
+        expect(mockHistoryPush).toHaveBeenCalledWith({ pathname: `/items/${mockedItem.id}` });
+    });
+    
+    it('should push to product details route after clicking in price', async () => {      
+        await waitFor(() => screen.getByTestId('product-list'));
+    
+        // Trigger the search event
+        fireEvent.click(screen.getByTestId('product-card-price'));
+        expect(mockHistoryPush).toHaveBeenCalledWith({ pathname: `/items/${mockedItem.id}` });
+    });
 });
 
 test('should display an error', async () => {

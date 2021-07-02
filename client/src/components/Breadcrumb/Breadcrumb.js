@@ -14,6 +14,9 @@ const Breadcrumb = ({ items }) => {
         return <li key={i}>{ item }</li>
     }
 
+    if (items.length === 0)
+        return null;
+
     return <ul className="breadcrumb">
         { 
             items.map(renderItem)
