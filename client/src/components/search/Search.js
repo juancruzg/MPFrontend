@@ -24,7 +24,9 @@ const Search = () => {
     return <React.Fragment>
         <header className="nav-header">
             <Link to="/" className="nav-logo">
-                <img src={logo} alt="logo" />
+                <div role="banner">
+                    <img data-testid="img-logo" src={logo} alt="logo" />
+                </div>
             </Link>
             <SearchInput onSubmit={handleSearch} />
         </header>

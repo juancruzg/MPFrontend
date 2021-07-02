@@ -19,6 +19,7 @@ const SearchInput = ({ onSubmit }) => {
     return <form onSubmit={handleSubmit} className="nav-search">
         <div className="nav-search-input">
             <input  
+                data-testid="search-box"
                 type="text" 
                 value={text}
                 onChange={handleInputChange}
@@ -26,6 +27,7 @@ const SearchInput = ({ onSubmit }) => {
         </div>
         <div 
             onClick={handleSubmit}
+            data-testid="search-box-button"
             role="button" 
             tabIndex={0} 
             className="nav-search-button">

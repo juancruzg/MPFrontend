@@ -1,13 +1,28 @@
-
 import React from 'react';
-import { shallow } from 'enzyme';
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter as Router } from 'react-router-dom';
+import { fireEvent, render, screen } from '@testing-library/react'
 
-import SearchInput from './SearchInput';
+import Search from './Search';
+import SearchResults from './SearchResults/SearchResults';
+import { beforeEach } from '@jest/globals';
 
-test('Search input will show proper placeholder', () => {
-    // Render a checkbox with label in the document
-    const search = shallow(<SearchInput  />);
+jest.mock('./SearchResults/SearchResults');
 
-    expect(search.find('input').props().placeholder).toEqual('Nunca dejes de buscar');
+beforeEach(() => {
+    render(<Router><Search /></Router>);
+});
+
+test('should display MercadoLibre`s logo and searchbar', () => {
+    expect(screen.getByTestId('search-box')).toBeInTheDocument();
+    expect(screen.getByTestId('img-logo')).toBeInTheDocument();
+    expect(screen.getByTestId('search-box-button')).toBeInTheDocument();
+});
+
+test('should push to search results route', () => {    
+    SearchResults.mockImplementation(() => <div>SearchResultsMock</div>);
+
+    // Trigger the search event
+    fireEvent.click(screen.getByTestId('search-box-button'));
+
+    expect(screen.getByText('SearchResultsMock')).toBeInTheDocument();
 });
