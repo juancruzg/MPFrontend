@@ -3,7 +3,7 @@ import axios from 'axios';
 import qs from 'qs';
 
 import { GET_ITEMS } from '../../../consts/URLs';
-import Breadcrumb from '../../Breadcrumb/Breadcrumb';
+import Breadcrumb from '../../breadcrumb/Breadcrumb';
 import Card from './Card';
 
 import './SearchResults.scss';
@@ -30,7 +30,14 @@ const SearchResults = () => {
             setCategories(res.data.categories);
             setLoading(false);
         }, (error) => {
-            setError(error);
+            const { response: { data } } = error;
+
+            if (data && data.message) {
+                setError(data.message);
+            } else {
+                setError("Woops, something went wrong");
+            } 
+
             setLoading(false);
         });
     }, [location]);
@@ -43,14 +50,14 @@ const SearchResults = () => {
     }
 
     if (loading)
-        return "Loading...";
+        return <span data-testid="loading">Loading...</span>;
 
     if (error)
-        return error.toString();
+        return <span data-testid="error">{ error }</span>;
 
     return <React.Fragment>
         <Breadcrumb items={categories} />
-        <div className="product-list">
+        <div className="product-list" data-testid="product-list">
             { items.map((props, i) => {
                 return <Card 
                     key={i} 

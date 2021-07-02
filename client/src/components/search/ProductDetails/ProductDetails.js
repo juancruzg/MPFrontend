@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 import ConditionLabel from './ConditionLabel';
-import Breadcrumb from '../../Breadcrumb/Breadcrumb';
+import Breadcrumb from '../../breadcrumb/Breadcrumb';
 import { GET_ITEM } from '../../../consts/URLs';
 import { formatMoney } from '../../../util/Format';
 
@@ -26,7 +26,14 @@ const ProductDetail = () => {
             setProduct(res.data.item);
             setCategories(res.data.categories);
         }, (error) => {
-            setError(error);
+            const { response: { data } } = error;
+
+            if (data && data.message) {
+                setError(data.message);
+            } else {
+                setError("Woops, something went wrong");
+            } 
+
             setLoading(false);
         });
     }, [params]);
@@ -34,36 +41,36 @@ const ProductDetail = () => {
     const { picture, title, description, condition, soldQuantity, price: {currency, amount, decimals} } = product;
 
     if (loading)
-        return "Loading ...";
+        return <span data-testid="loading">Loading ...</span>;
 
     if (error)
-        return error.toString();
+        return <span data-testid="error">{ error }</span>;
 
     return <React.Fragment>
         <Breadcrumb items={categories} />
-        <div className="product-container">
+        <div className="product-container" data-testid="product">
             <div className="product-left-column">
                 <div className="product-image">
                     <img width="680px" src={picture} alt="product" />
                 </div>
-                <span className="product-description">
+                <span className="product-description" data-testid="product-description">
                     <h2>Descripción del producto</h2>
                     { description }
                 </span>
             </div>
             <div className="product-right-column">
                 <div className="product-subtitle">
-                    <span className="condition">
+                    <span className="condition" data-testid="product-condition">
                         <ConditionLabel condition={condition} />
                     </span>
                     <span className="separator">-</span>
-                    <span className="sold-quantity">{ soldQuantity } vendidos</span>
+                    <span className="sold-quantity" data-testid="product-sold-quantity">{ soldQuantity } vendidos</span>
                 </div>
-                <div className="product-title">{ title }</div>
+                <div className="product-title" data-testid="product-title">{ title }</div>
                 <div className="price-tag">
-                    <span className="price-currency">{ currency }</span>
+                    <span className="price-currency" data-testid="product-currency">{ currency }</span>
                     {" "}
-                    <span className="price-amount">{ formatMoney(amount, decimals) }</span>
+                    <span className="price-amount" data-testid="product-amount">{ formatMoney(amount, decimals) }</span>
                 </div>
                 <div className="button">
                     <button>Comprar</button>

@@ -3,8 +3,8 @@ import { Route, Link, useHistory } from 'react-router-dom';
 
 import logo from '../../assets/Logo_ML.png';
 import SearchInput from './SearchInput';
-import SearchResults from './SearchResults/SearchResults';
-import ProductDetails from './ProductDetails/ProductDetails';
+import SearchResults from './searchResults/SearchResults';
+import ProductDetails from './productDetails/ProductDetails';
 
 import './Search.scss';
 

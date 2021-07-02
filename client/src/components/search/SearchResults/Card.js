@@ -10,17 +10,17 @@ const Card = ({ id, onClick, title, price: { currency, amount, decimals }, pictu
     }
 
     return <React.Fragment>
-        <div className="product-card">
-            <div className="product-picture" onClick={handleProductClick}>
+        <div className="product-card" data-testid="product-card">
+            <div className="product-picture" data-testid="product-card-image" onClick={handleProductClick}>
                 <img width="180" height="180" src={picture} alt={title || "product"}></img>
             </div>
             <div className="content">
                 <div className="product-details">
                     <div className="product-title">
-                        <span className="price-tag" onClick={handleProductClick}>
-                            <span className="price-currency">{currency}</span>
+                        <span className="price-tag" data-testid="product-card-price" onClick={handleProductClick}>
+                            <span className="price-currency" data-testid="product-card-currency">{currency}</span>
                             {" "}
-                            <span className="price-amount">{formatMoney(amount, decimals)}</span>
+                            <span className="price-amount" data-testid="product-card-amount">{formatMoney(amount, decimals)}</span>
                             { freeShipping && 
                                 <React.Fragment>
                                     {" "}
@@ -28,9 +28,9 @@ const Card = ({ id, onClick, title, price: { currency, amount, decimals }, pictu
                                 </React.Fragment>
                             }  
                         </span>
-                        <h2 onClick={handleProductClick}>{ title }</h2>
+                        <h2 onClick={handleProductClick} data-testid="product-card-title">{ title }</h2>
                     </div>
-                    <span className="product-location">
+                    <span className="product-location" data-testid="product-card-location">
                         { location }
                     </span>
                 </div>                    

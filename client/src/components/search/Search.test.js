@@ -1,12 +1,12 @@
 import React from 'react';
 import { MemoryRouter as Router } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react'
-
-import Search from './Search';
-import SearchResults from './SearchResults/SearchResults';
 import { beforeEach } from '@jest/globals';
 
-jest.mock('./SearchResults/SearchResults');
+import Search from './Search';
+import SearchResults from './searchResults/SearchResults';
+
+jest.mock('./searchResults/SearchResults');
 
 beforeEach(() => {
     render(<Router><Search /></Router>);
