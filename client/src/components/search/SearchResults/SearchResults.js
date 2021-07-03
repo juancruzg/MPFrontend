@@ -3,7 +3,7 @@ import axios from 'axios';
 import qs from 'qs';
 
 import { GET_ITEMS } from '../../../consts/URLs';
-import Breadcrumb from '../../breadcrumb/Breadcrumb';
+import Breadcrumb from '../../breadcrumb';
 import Card from './Card';
 
 import './SearchResults.scss';

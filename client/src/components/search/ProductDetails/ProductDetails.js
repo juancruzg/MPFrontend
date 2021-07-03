@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 import ConditionLabel from './ConditionLabel';
-import Breadcrumb from '../../breadcrumb/Breadcrumb';
+import Breadcrumb from '../../breadcrumb';
 import { GET_ITEM } from '../../../consts/URLs';
 import { formatMoney } from '../../../util/Format';
 

@@ -4,9 +4,9 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach } from '@jest/globals';
 
 import Search from './Search';
-import SearchResults from './searchResults/SearchResults';
+import SearchResults from './searchResults';
 
-jest.mock('./searchResults/SearchResults');
+jest.mock('./searchResults');
 
 beforeEach(() => {
     render(<Router><Search /></Router>);
