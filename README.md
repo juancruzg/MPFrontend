@@ -65,6 +65,8 @@ npm build
 ```
 This will generate a 'build' directory. You may then use:
 
+```
 SET HTTP_PORT={desiredPort} && node build\index.js
+```
 
 Server will startup on localhost:{desiredPort}.
