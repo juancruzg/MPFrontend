@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 
 import routes from './routes';
 
@@ -12,6 +13,9 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended: true,
 }));
+
+// Setup HTTP headers to be secure
+app.use(helmet());
 
 // Use our router to serve api methods
 app.use(routes);
