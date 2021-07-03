@@ -1,9 +1,7 @@
 # MPFrontend
 
-Project to review my frontend knowledge
-
-# DEV   
-## Client
+## DEV   
+### Client
 
 To run the client side in a development environment, you need to clone this repo and run in the client directory
 
@@ -20,7 +18,7 @@ yarn start
 ```
 
 Client will start an app in localhost:3000 by default.
-## Server
+### Server
 
 To run the server in a development environment, you need to clone this repo and run in the server directory
 
@@ -31,8 +29,8 @@ npm start
 
 Server will startup on localhost:3001 by default.
 
-# PRD   
-## Client
+## PRD   
+### Client
 
 To run the client side in a production environment, you need to clone this repo and run in the client directory
 
@@ -55,7 +53,7 @@ yarn global add serve
 serve -s build
 ```
 Client will start an app in localhost:5000 by default.
-## Server
+### Server
 
 To run the server in a production environment, you need to clone this repo and run in the server directory
 
