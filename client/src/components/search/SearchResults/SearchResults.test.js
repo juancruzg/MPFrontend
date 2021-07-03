@@ -79,29 +79,25 @@ test('should not find items', async () => {
 });
 
 describe('Click Event', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
         render(<Router><SearchResults /></Router>);
+
+        await waitFor(() => screen.getByTestId('product-list'));
     });
 
-    it('should push to product details route after clicking in title', async () => {  
-        await waitFor(() => screen.getByTestId('product-list'));
-    
+    it('should push to product details route after clicking in title', () => {      
         // Trigger the search event
         fireEvent.click(screen.getByTestId('product-card-title'));
         expect(mockHistoryPush).toHaveBeenCalledWith({ pathname: `/items/${mockedItem.id}` });
     });
     
-    it('should push to product details route after clicking in image', async () => {      
-        await waitFor(() => screen.getByTestId('product-list'));
-    
+    it('should push to product details route after clicking in image', () => {          
         // Trigger the search event
         fireEvent.click(screen.getByTestId('product-card-image'));
         expect(mockHistoryPush).toHaveBeenCalledWith({ pathname: `/items/${mockedItem.id}` });
     });
     
-    it('should push to product details route after clicking in price', async () => {      
-        await waitFor(() => screen.getByTestId('product-list'));
-    
+    it('should push to product details route after clicking in price', () => {          
         // Trigger the search event
         fireEvent.click(screen.getByTestId('product-card-price'));
         expect(mockHistoryPush).toHaveBeenCalledWith({ pathname: `/items/${mockedItem.id}` });

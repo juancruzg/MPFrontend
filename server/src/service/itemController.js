@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import axios from 'axios';
 
 import {
@@ -5,8 +6,8 @@ import {
     GET_ITEMS_URL,
     GET_ITEM_DESCRIPTION_URL,
     GET_CATEGORIES,
-} from './consts';
-import Item from './item';
+} from './consts/URLs';
+import Item from './entities/item';
 
 const getItem = async (id) => {
     // First we call ML api to get item detail.
@@ -15,6 +16,10 @@ const getItem = async (id) => {
     if (response.data && response.data) {
         // We construct a new Item so that we only filter the desired props.
         const item = new Item(response.data);
+
+        if (!item.id) {
+            throw { response: { statusText: 'Something went wrong', status: 500 } };
+        }
 
         const [picture] = response.data.pictures;
 

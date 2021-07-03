@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
-import { getItem, getItems } from './itemController';
+import { getItem, getItems } from './service/itemController';
 
 const { HTTP_PORT = 3001 } = process.env;
 const app = express();
@@ -22,7 +22,7 @@ app.get('/api/items', async (req, res) => {
 
         res.status(200).json(items);
     } catch (error) {
-        res.status(error.response.status || 500).send(error.response.statusText);
+        res.status(error.response.status || 500).send({ message: error.response.statusText });
     }
 });
 
@@ -35,7 +35,7 @@ app.get('/api/items/:id', async (req, res) => {
 
         res.status(200).json(items);
     } catch (error) {
-        res.status(error.response.status || 500).send(error.response.statusText);
+        res.status(error.response.status || 500).send({ message: error.response.statusText });
     }
 });
 
