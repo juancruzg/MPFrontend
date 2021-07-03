@@ -12,7 +12,7 @@ sans-serif;
 
 @mixin for-size($size) {
     @if $size == phone-only {
-        @media (max-width: 599px) { @content; }
+        @media (max-width: 480px) { @content; }
     } @else if $size == tablet-portrait-up {
         @media (max-width: 600px) { @content; }
     } @else if $size == tablet-landscape-up {
