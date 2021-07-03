@@ -1,4 +1,3 @@
-import './App.scss';
 import Search from './components/search';
 import { Switch, Route } from 'react-router-dom';
 
