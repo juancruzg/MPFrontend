@@ -139,6 +139,20 @@ describe('Item Controller - getItem', () => {
 describe('Item Controller - getItems', () => {
     const searchText = 'search';
 
+    it('should get 4 items', async () => {
+        mock.onGet(GET_ITEMS_URL, { params: { q: searchText } }).reply(200, {
+            results: [getItemMock, getItemMock, getItemMock, getItemMock, getItemMock],
+            filters: filtersMock,
+        });
+
+        const { items, categories } = await getItems(searchText);
+
+        expect(categories.length).toBe(filtersMock[0].values[0].path_from_root.length);
+        expect(categories).toEqual(filtersMock[0].values[0].path_from_root.map((pfr) => pfr.name));
+
+        expect(items.length).toBe(4);
+    });
+
     it('should search for valid items', async () => {
         mock.onGet(GET_ITEMS_URL, { params: { q: searchText } }).reply(200, {
             results: [getItemMock],
